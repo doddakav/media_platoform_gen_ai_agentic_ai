@@ -2,11 +2,11 @@ import mysql.connector
 import streamlit as st
 
 conn=mysql.connector.connect(
-    host=st.secrets[""],
-    user=st.secrets[""],
-    password=st.secrets[""],
-    database=st.secrets[""],
-    port=st.secrets[""]
+    host=st.secrets["host"],
+    user=st.secrets["user"],
+    password=st.secrets["password"],
+    database=st.secrets["database"],
+    port=st.secrets["port"]
 )
 
 cursor=conn.cursor(dictionary=True)
