@@ -27,7 +27,7 @@ with Login:
             cursor.execute(
                 """select * from users where email=%s and password=%s""",(email,password)
             )
-            users=cursor.fetchone()
+            user=cursor.fetchone()
 
             if user:
                 st.succes("Login successful")
