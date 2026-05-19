@@ -10,8 +10,7 @@ with Signup:
         password=st.text_input("password",type="password")
         btn=st.form_submit_button("Signup")
         if btn:
-            cursor.execute(
-                """insert into users (name,email,password)values(%s,%s,%s),(name,email,password)"""
+            cursor.execute("""insert into users (name,email,password)values(%s,%s,%s),(name,email,password)"""
             )
             conn.commit()
             st.success("Signup successfull")
@@ -24,8 +23,7 @@ with Login:
         btn=st.form_submit_button("Login")
 
         if btn:
-            cursor.execute(
-                """select * from users where email=%s and password=%s""",(email,password)
+            cursor.execute("""select * from users where email=%s and password=%s""",(email,password)
             )
             user=cursor.fetchone()
 
