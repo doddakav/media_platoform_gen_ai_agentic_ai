@@ -30,7 +30,7 @@ with Login:
             if user:
                 st.success("Login successful")
             else:
-                st.error("Invalid Credentials")
+                st.error("Invalid Credential")
 
 
 
