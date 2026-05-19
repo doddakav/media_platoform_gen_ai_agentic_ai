@@ -11,7 +11,7 @@ with Signup:
         btn=st.form_submit_button("Signup")
         if btn:
             cursor.execute(
-                """insert into users (name,email,password)values(%s,%s,%s),(name,email,passowrd)"""
+                """insert into users (name,email,password)values(%s,%s,%s),(name,email,password)"""
             )
             conn.commit()
             st.success("Signup successfull")
