@@ -28,7 +28,7 @@ with Login:
             user=cursor.fetchone()
 
             if user:
-                st.succes("Login successful")
+                st.success("Login successful")
             else:
                 st.error("Invalid Credentials")
 
