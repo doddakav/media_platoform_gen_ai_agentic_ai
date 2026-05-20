@@ -23,17 +23,42 @@ def dashboard():
             st.write(choose_file.type)
         if choose_file is not None:
             if "image" in choose_file.type:
-                st.image(choose_file)
+                st.image(choose_file,width=200)
             elif "video" in choose_file.type:
                 st.video(choose_file)
             elif "audio" in choose_file.type:
-                st.audio(choose_file) 
+                st.audio(choose_file)
 
         if st.button("upload file to cloudinary"):
             uploaded_dict_obj=cloudinary.uploader.upload(choose_file,resource_type="auto") 
             url=uploaded_dict_obj["secure_url"]             
-            st.write(url)
-            st.write("file uploaded to cloudinary")
+            
+            
+            cursor.execute("insert into files(user_id,file_name,file_type,file_url) values(%s,%s,%s,%s)",(
+                st.session_state.user["id"],choose_file.name,choose_file.type,url))
+            conn.commit()
+            st.success("file uploaded to cloudinary")
+    elif opt=="View Files":
+        st.header("Your Files")
+        cursor.execute("select * from files where user_id=%s",(st.session_state.user["id"]))
+        files=cursor.fetchall()
+        if files:
+            for file in files:
+                st.write("File", file["file_name"])
+                st.write("Uploaded",file["upload_date"])
+                if "image" in file["file_type"]:
+                    st.image(file["file_url"])
+                elif "video" in file["file_type"]:
+                    st.video(file["file_url"])
+
+                elif "audio" in file["file_type"]:
+                    st.audio(file["file_url"])
+                else:
+                    st.link_button("open_file",file["file_url"])
+        else:
+            st.warning("Non files Uploaded")
+
+
     elif opt == "Logout":
         st.session_state.user=None
         st.success("logout successfully...")
