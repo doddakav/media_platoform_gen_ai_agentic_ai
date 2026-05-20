@@ -47,7 +47,7 @@ def dashboard():
                 st.write("File", file["file_name"])
                 st.write("Uploaded",file["upload_date"])
                 if "image" in file["file_type"]:
-                    st.image(file["file_url"])
+                    st.image(file["file_url"],width=200)
                 elif "video" in file["file_type"]:
                     st.video(file["file_url"])
 
