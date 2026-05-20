@@ -39,7 +39,7 @@ def dashboard():
         st.success("logout successfully...")
         st.rerun()
 st.title("Media Platform")
-Login,Signup =st.tabs(["Login","Signup"])
+
 def Signup_function():
     with st.form("Signup form"):
         st.header("Signup form")
