@@ -56,7 +56,7 @@ def dashboard():
                 else:
                     st.link_button("open_file",file["file_url"])
         else:
-            st.warning("Non files Uploaded")
+            st.warning("No files Uploaded")
 
 
     elif opt == "Logout":
