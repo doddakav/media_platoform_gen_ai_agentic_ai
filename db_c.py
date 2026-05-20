@@ -14,9 +14,9 @@ cursor=conn.cursor(dictionary=True)
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100),
-    email VARCHAR(100) UNIQUE,
-    password VARCHAR(100)
+    name VARCHAR(100) not null,
+    email VARCHAR(100) UNIQUE not null,
+    password VARCHAR(100) not null
 )
 """)
 
