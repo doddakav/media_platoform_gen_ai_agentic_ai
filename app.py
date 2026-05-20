@@ -40,7 +40,7 @@ def dashboard():
             st.success("file uploaded to cloudinary")
     elif opt=="View Files":
         st.header("Your Files")
-        cursor.execute("select * from files where user_id=%s",(st.session_state.user["id"]))
+        cursor.execute("select * from files where user_id=%s",(st.session_state.user["id"],))
         files=cursor.fetchall()
         if files:
             for file in files:
