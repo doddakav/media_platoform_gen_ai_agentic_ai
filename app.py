@@ -1,8 +1,46 @@
 import streamlit as st
 from db_c import conn,cursor
-st.title("media platform")
+import cloudinary
+import cloudinary.uploader
+
+cloudinary.config(
+    cloud_name=st.secrets["cloud_name"],
+    api_key=st.secrets["api_key"],
+    api_secret=st.secrets["api_secrets"]
+)
+if "user" not in st.session_state:
+    st.session_state.user=None
+
+def dashboard():
+    st.sidebar.success("Welcome to Dashboard")
+    opt=st.sidebar.selectbox("choose",["upload Files","View Files","Logout"])
+    st.header("Dashboard")
+    if opt=="upload Files":
+        st.header("Upload Files")
+        choose_file=st.file_uploader("choose file",type=["pdf","jpg","jpeg","png","mp3","mp4"])
+        if choose_file:
+            st.write(choose_file.name)
+            st.write(choose_file.type)
+
+        if "image" in choose_file.type:
+            st.image(choose_file)
+        elif "video" in choose_file.type:
+            st.video(choose_file)
+        elif "audio" in choose_file.type:
+            st.audio(choose_file) 
+
+        if st.button("upload file to cloudinary"):
+            uploaded_dict_obj=cloudinary.uploader.upload(choose_file,resource_type="auto") 
+            url=uploaded_dict_obj["secure_url"]             
+            st.write(url)
+            st.write("file uploaded to cloudinary")
+    elif opt == "Logout":
+        st.session_state.user=None
+        st.success("logout successfully...")
+        st.rerun()
+st.title("Media Platform")
 Login,Signup =st.tabs(["Login","Signup"])
-with Signup:
+def Signup():
     with st.form("Signup form"):
         st.header("Signup form")
         name=st.text_input("Name")
@@ -15,7 +53,7 @@ with Signup:
             conn.commit()
             st.success("Signup successfull")
 
-with Login:
+def Login():
     with st.form("Login form"):
         st.header("Login form")
         email=st.text_input("Email")
@@ -25,12 +63,26 @@ with Login:
         if btn:
             cursor.execute("""select * from users where email=%s and password=%s""",(email,password)
             )
-            user=cursor.fetchone()
+            logged_user=cursor.fetchone()
+            st.session_state.user = logged_user
+            st.write("loggedin succesfully")
+            st.rerun()
 
-            if user:
+            if logged_user:
                 st.success("Login successful")
             else:
                 st.error("Invalid Credential")
+if st.session_state.user==None:
+    Login,Signup=st.tabs(
+        ["Login","Signup"]
+    )
+    with Signup:
+        Signup()
+    with Login:
+        Login()
+else:
+    dashboard()
+    
 
 
 
