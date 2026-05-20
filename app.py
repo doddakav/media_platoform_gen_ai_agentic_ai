@@ -40,7 +40,7 @@ def dashboard():
         st.rerun()
 st.title("Media Platform")
 Login,Signup =st.tabs(["Login","Signup"])
-def Signup():
+def Signup_function():
     with st.form("Signup form"):
         st.header("Signup form")
         name=st.text_input("Name")
@@ -53,7 +53,7 @@ def Signup():
             conn.commit()
             st.success("Signup successfull")
 
-def Login():
+def Login_function():
     with st.form("Login form"):
         st.header("Login form")
         email=st.text_input("Email")
@@ -77,12 +77,12 @@ if st.session_state.user==None:
         ["Login","Signup"]
     )
     with Signup:
-        Signup()
+        Signup_function()
     with Login:
-        Login()
+        Login_function()
 else:
     dashboard()
-    
+
 
 
 
