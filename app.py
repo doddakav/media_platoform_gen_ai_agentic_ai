@@ -50,7 +50,7 @@ def dashboard():
                     st.image(file["file_url"],width=200)
                 elif "video" in file["file_type"]:
                     st.video(file["file_url"])
-
+                
                 elif "audio" in file["file_type"]:
                     st.audio(file["file_url"])
                 else:
